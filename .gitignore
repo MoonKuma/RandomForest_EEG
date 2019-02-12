@@ -1,0 +1,12 @@
+# ignore those following
+*.gz
+*.txt
+*.csv
+/.idea/
+/data_sample/eeg_raw_data/subject_data/
+/data_sample/formal_dataset/
+
+
+
+
+
