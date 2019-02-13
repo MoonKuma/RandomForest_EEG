@@ -1,9 +1,9 @@
-# ignore those following
+# ignore the following
 *.gz
 *.txt
-*.csv
 /.idea/
 /data_sample/eeg_raw_data/subject_data/
+/data_sample/eeg_raw_data/example/
 /data_sample/formal_dataset/
 
 
