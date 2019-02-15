@@ -59,6 +59,7 @@ ica.plot_properties(eog_epochs, picks=eog_inds, psd_args={'fmax': 35.},
 raw_copy = raw.copy()
 ica.apply(raw_copy)
 
+
 # epoch data (and reject bad epochs)
 reject = dict(eeg=10.)
 events = mne.find_events(raw_copy, stim_channel='STI 014')
@@ -66,12 +67,13 @@ event_id = {"fear": 11, "neutral": 19}
 color = {11: 'green', 19: 'red'}  # this for plotting events
 mne.viz.plot_events(events, raw_copy.info['sfreq'], raw_copy.first_samp, color=color,
                     event_id=event_id)
-tmin = -0.2  # 200ms before
-tmax = 0.5  # 500ms after
+tmin = -1  # -1000ms before
+tmax = 1  # 1000ms after
 baseline = (None, 0)  # means from the first instant to t = 0
 # if trying to plot, montage should be corrected before
 montage = mne.channels.read_montage('standard_1020')
-picks_eeg = mne.pick_types(raw_copy.info, meg=False, eeg=True, eog=False, stim=False, exclude=['VEOG','HEOG', 'CP1', 'FC4']) # CP1/FC4 is bad here
+picks_eeg = mne.pick_types(raw_copy.info, meg=False, eeg=True, eog=False, stim=False, exclude=['VEOG','HEOG', 'CP1', 'FC4'])
+# CP1/FC4 is bad here for unknown reason, yet we won't be able to do this exculsion when computing large amount of data
 epochs = mne.Epochs(raw_copy, events, event_id, tmin, tmax, proj=True, picks=picks_eeg, baseline=baseline,
                     reject=reject, reject_by_annotation=True)
 # del raw_copy  # here we can release raw data for saving memory
@@ -80,17 +82,39 @@ epoch_avg = epochs.average()
 title = 'EEG Average reference'
 epoch_avg.plot(titles=dict(eeg=title), time_unit='s')
 epoch_avg.plot_topomap(times=[0.13], size=3., title=title, time_unit='s')  # set show_names=True for checking channels
+# carry out average for different epochs and plot them
 all_evokeds = dict((cond, epochs[cond].average()) for cond in event_id)
 joint_kwargs = dict(ts_args=dict(time_unit='s'),
                     topomap_args=dict(time_unit='s'))
 for cond in all_evokeds:
     all_evokeds[cond].plot_joint(title=cond, **joint_kwargs)
-
-
-
-
-
-
+# save epoch and epoch_avg()
+epochs.save('data_sample/eeg_raw_data/example/test-epo.fif')  # epoch data should be stored with -epo.fif
+evoke_list = list()
+for cond in all_evokeds:
+    evoke_list.append(all_evokeds[cond])
+mne.write_evokeds('data_sample/eeg_raw_data/example/test-ave.fif', evoke_list) # evoked data stored with -ave.fif
+# clean ram here
+# read in data
+epochs = mne.read_epochs('data_sample/eeg_raw_data/example/test-epo.fif')
+evoked_data = mne.read_evokeds('data_sample/eeg_raw_data/example/test-ave.fif')
+# using epoch data to continue time-frequency analyze
+epochs.plot_psd(fmin=2., fmax=40.) # avg frequency and power
+epochs.plot_psd_topomap(normalize=True) # standard delta - gamma frequency-power topo-graph
+# Morlet (Not knowing whats going on, anyway...)
+freqs = np.logspace(*np.log10([1, 35]), num=8)
+n_cycles = freqs / 2.  # different number of cycle per frequency
+power = mne.time_frequency.tfr_morlet(epochs, freqs=freqs, n_cycles=n_cycles, use_fft=True, return_itc=False, decim=3, n_jobs=1)
+'''
+ValueError: At least one of the wavelets is longer than the signal. Use a longer signal or shorter wavelets.
+Here to ensure the morlet work, we need each epoch data be long enough (70 points in the first time no longer suit)
+Lets try the original sampling rate (250Hz) and cut out a window of two seconds
+'''
+power.plot_topo(baseline=(-1, 0), mode='logratio', title='Average power')
+power.plot([17], baseline=(-1, 0), mode='logratio', title=power.ch_names[17]) # channel 17 is fcz
+power.plot_joint(baseline=(-1, 0), mode='mean', tmin=-.5, tmax=2,
+                 timefreqs=[(0, 10), (0.7, 8)])
+#power works as a 3-D nparray data
 
 
 
