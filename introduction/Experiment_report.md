@@ -36,13 +36,10 @@
      - Fear
      - Neutral
    - Channel Position
-     - FCZ
-     - CZ
-     - PZ
-     - OZ
-   - Time window[*Auto-detected]
-     - First Peak
-     - Second Peak
+     - FCZ, CZ, PZ, OZ
+   - Time window[*Auto-detected in real time]
+     - First Peak [105ms ~ 135ms]
+     - Second Peak [350ms ~ 400ms]
 
 3. EEG (morlet) data
 
@@ -54,15 +51,9 @@
 
      ```python
      # computed as
-     freqs = np.logspace(*np.log10([1, 35]), num=6)
+     freqs = [2.5, 5.0, 10.0, 17, 35] # as Delta (~3 Hz), Theta(3.5~7.5 Hz), Alpha(7.5~13 Hz), Beta(14~ Hz) 
      ```
 
-     - 1 Hz
-     - 2.03 Hz
-     - 4.14 Hz
-     - 8.44 Hz
-     - 17.18 Hz
-     - 35 Hz
 
 ### EEG analyze pipeline
 
@@ -84,13 +75,13 @@ import mne
    - band filter 1~40 Hz
    - ICA removing eye movement
    - epoch, -0,5s~1s, baseline correction[,0], reject bad epochs(>10.0)
-   - average across events type  
+   - average across events type  and get amplitude
 
 3. EEG data
 
    - high-pass filter 1Hz~
    - ICA removing eye movement
    - epoch, -1s~1s, baseline correction[total], reject bad epochs(>10.0)
-   -  
+   -  Morlet and get power
 
 

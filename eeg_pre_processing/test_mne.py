@@ -11,6 +11,8 @@ from mne.preprocessing import ICA
 from mne.preprocessing import create_eog_epochs, create_ecg_epochs
 import matplotlib.pyplot as plt
 import numpy as np
+import magic
+
 
 
 raw_file1 = 'data_sample/eeg_raw_data/example/sub2/tb1.cnt'
@@ -115,7 +117,8 @@ power.plot([17], baseline=(-1, 0), mode='logratio', title=power.ch_names[17]) # 
 power.plot_joint(baseline=(-1, 0), mode='mean', tmin=-.5, tmax=2,
                  timefreqs=[(0, 10), (0.7, 8)])
 #power works as a 3-D nparray data
-
+# mne.time_frequency.read_tfrs(fname, condition=None)
+# mne.time_frequency.write_tfrs(fname, tfr, overwrite=False)
 
 
 
