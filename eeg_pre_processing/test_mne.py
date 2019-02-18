@@ -11,7 +11,7 @@ from mne.preprocessing import ICA
 from mne.preprocessing import create_eog_epochs, create_ecg_epochs
 import matplotlib.pyplot as plt
 import numpy as np
-import magic
+
 
 
 
