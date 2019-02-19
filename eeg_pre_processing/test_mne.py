@@ -11,7 +11,8 @@ from mne.preprocessing import ICA
 from mne.preprocessing import create_eog_epochs, create_ecg_epochs
 import matplotlib.pyplot as plt
 import numpy as np
-
+import pandas as pd
+from sklearn.preprocessing import normalize
 
 
 
@@ -120,7 +121,33 @@ power.plot_joint(baseline=(-1, 0), mode='mean', tmin=-.5, tmax=2,
 # mne.time_frequency.read_tfrs(fname, condition=None)
 # mne.time_frequency.write_tfrs(fname, tfr, overwrite=False)
 
+# read behavior data
+file_path = 'data_sample/eeg_raw_data/subject_data/Behavior_Original/behavior_orig.txt'
+txt_data = pd.read_table(file_path)
+
+# read evoked data
+file_path = 'data_sample/formal_dataset/sub_evoked_data/sub2-ave.fif'
+evokes = mne.read_evokeds(file_path)  # caution this data is not baseline corrected
+index = evokes[0].ch_names
+evoke = evokes[0]
+comments = evoke.comment
+evoke.apply_baseline(baseline=(None, 0))
+get_peak1 = evoke.get_peak(ch_type = 'eeg', tmin=0.05, tmax=0.15)
+peak_time1 = get_peak1[1]
+evt_copy = evoke.copy()
+slice_1 = evt_copy.crop(tmin=peak_time1-0.01, tmax=peak_time1+0.01) # average across 5 plots (0.020s * 250 /s)
+d_tmp = slice_1.data # this return a np.ndarray
+mean = np.mean(d_tmp, axis=1).reshape(d_tmp.shape[0], 1)
+norm_mean = normalize(mean,axis=0).T  # normalize and transform
+# save this into a data_frame
+index_list = list()
+for channel in index:
+    col = comments + '_peak1_erp'
+    index_list.append(col)
 
 
+# read tfr data
+file_path = 'data_sample/formal_dataset/sub_power_data/sub2-tfr.h5'
+trfs = mne.time_frequency.read_tfrs(file_path)
 
 

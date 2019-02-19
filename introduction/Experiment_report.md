@@ -36,16 +36,14 @@
      - Fear
      - Neutral
    - Channel Position
-     - FCZ, CZ, PZ, OZ
+     - all 64 channels
    - Time window[*Auto-detected in real time]
-     - First Peak [105ms ~ 135ms]
-     - Second Peak [350ms ~ 400ms]
+     - First Peak [50ms ~ 150ms] and its amplitudes
+     - Second Peak [200ms ~ 500ms] and its amplitudes
 
 3. EEG (morlet) data
 
-   - Event type[*same as above]
-
-   - Channel Position[*same as above]
+   - Event type, Channel Position, Time window[*same as above]
 
    - Frequency of interest
 
