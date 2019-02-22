@@ -126,7 +126,7 @@ file_path = 'data_sample/eeg_raw_data/subject_data/Behavior_Original/behavior_or
 txt_data = pd.read_table(file_path)
 
 # read evoked data
-file_path = 'data_sample/formal_dataset/sub_evoked_data/sub2-ave.fif'
+file_path = 'data_sample/formal_dataset/sub_evoked_data/sub56-ave.fif'
 evokes = mne.read_evokeds(file_path)  # caution this data is not baseline corrected
 index = evokes[0].ch_names
 evoke = evokes[0]
@@ -147,7 +147,7 @@ for channel in index:
 
 
 # read tfr data
-file_path = 'data_sample/formal_dataset/sub_power_data/sub2-tfr.h5'
-trfs = mne.time_frequency.read_tfrs(file_path)
+file_path = 'data_sample/formal_dataset/sub_power_data/sub56-tfr.h5'
+trfs222 = mne.time_frequency.read_tfrs(file_path)
 
 

@@ -29,6 +29,8 @@ def pre_processing(data_path, result_path_erp, result_path_eeg, patten, sample_r
     baseline_eeg = (None, None)
     freqs = np.array([2.5, 5.0, 10.0, 17., 35.]) # as Delta (~3 Hz), Theta(3.5~7.5 Hz), Alpha(7.5~13 Hz), Beta(14~ Hz)
     n_cycles = freqs / 2.
+    # reject
+    reject = 10.0
 
     # start computing
     file_dict = get_file_dict(data_path=data_path, patten=patten)
@@ -67,7 +69,8 @@ def pre_processing(data_path, result_path_erp, result_path_eeg, patten, sample_r
             print(msg)
             ICA_failed[sub_id] = traceback.format_exc()
         # Epoch
-        erp_evoked_list, erp_epochs = epoch_raw(raw_copy=raw_copy_erp, time_window=time_window_erp, event_id=event_id, baseline=baseline_erp)
+        erp_evoked_list, erp_epochs = epoch_raw(raw_copy=raw_copy_erp, time_window=time_window_erp, event_id=event_id,
+                                                baseline=baseline_erp, reject=reject)
         # Save evoked data
         file_name = result_path_erp + sub_id + '-ave.fif'
         mne.write_evokeds(file_name, erp_evoked_list)
@@ -84,7 +87,7 @@ def pre_processing(data_path, result_path_erp, result_path_eeg, patten, sample_r
             ica.apply(raw)
         # Epoch
         eeg_evoked_list, eeg_epochs = epoch_raw(raw_copy=raw, time_window=time_window_eeg, event_id=event_id,
-                                                baseline=baseline_eeg)
+                                                baseline=baseline_eeg, reject=reject)
         # power
         try:
             powers = morlet_epochs(epochs=eeg_epochs, event_id=event_id, freqs=freqs, n_cycles=n_cycles)
