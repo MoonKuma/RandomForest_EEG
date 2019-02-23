@@ -4,6 +4,16 @@
 
 ​	Random forest is a supervised machine learning techniques based on the combination of **ensemble** ("average" the result of multiple models for overall better performance) and **decision tree** ( predict certain target value based on splitting its features at different stage in a tree-like shape ). Random forest is used both in **classification** (when target values comes from discrete set like soft-max), and in **regression** ( for continuous target value like linear regression). The following introduction illustrate the basic principle, implementation and important hyper-parameters, pros and cons of random forest model. And then compare it with other machine learning model under same and different task condition.
 
+- 总结来说，RandomForest是一种非线性的监督学习模型。
+- 对比线性模型（ANOVA，线性回归）：
+  - 其决策树的特性允许对**非线性**规律的学习
+- 对比其他非线性模型（SVM）
+  - 首先可以解决分类问题（因变量是分类变量），也可解决**回归问题**（因变量是连续变量）；
+  - 其次，可以在做出预测的同时，提供关于自变量的各个**特性在预测中的重要性的评估**，以此具有一定的实际意义； 
+  - 最后，随机森林的设计（多个随机的模型），避免了异常值/异常特征对于模型的影响，也使模型**免于过度拟合带来的准确率下降的问题**，最终使得训练过程相对**简单**并不要求高的模型理解或者预加工。
+- 其问题包括：
+  - 对于**非结构化数据学习能力差**（无法完成面孔识别，手写数字识别等问题）
+
 ### Principle
 
 1. Decision Tree  - Tree

@@ -9,7 +9,7 @@
   - Find a way in measuring brain aging 
   - Female has younger metabolic brain age
 - To summarize :
-  -  简单来说，这篇文章的工作是，找了200个人的PET数据，训练了一个random forest模型，用PET数据实现了对被试生理年龄的准确率约为90%的预测，然后认为这PET数据就是脑老化的一种表征，再对相同生理年龄不同性别的被试套用上面的模型，发现女性的预测值明显小于男性。以此得出了女性的脑老化比男性慢的结论。
+  -  这篇文章的工作是，找了200个人的PET数据，训练了一个random forest模型，用PET数据实现了对被试生理年龄的准确率约为90%的预测，然后认为这PET数据就是脑老化的一种表征，再对相同生理年龄不同性别的被试套用上面的模型，发现女性的预测值明显小于男性。以此得出了女性的脑老化比男性慢的结论。
 
 ### Data Structure
 

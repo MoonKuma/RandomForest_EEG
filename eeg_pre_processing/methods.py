@@ -12,9 +12,9 @@ from mne.preprocessing import create_eog_epochs, create_ecg_epochs
 
 
 def get_file_dict(data_path, patten):
-    # data file path like : data_sample/eeg_raw_data/ERP_Original/sub2/tb1.cnt
-    # this method scan all data inside data_path(data_sample/eeg_raw_data/ERP_Original/) and start with patten('tb')
-    # and return a dict like {sub2 : data_sample/eeg_raw_data/ERP_Original/sub2/tb1.cnt}
+    # data file path like : data_sample/eeg_raw_data/EEG_Original/sub2/tb1.cnt
+    # this method scan all data inside data_path(data_sample/eeg_raw_data/EEG_Original/) and start with patten('tb')
+    # and return a dict like {sub2 : data_sample/eeg_raw_data/EEG_Original/sub2/tb1.cnt}
     raw_data_dict = dict()
     dir_list = os.listdir(data_path)
     for dir_name in dir_list:

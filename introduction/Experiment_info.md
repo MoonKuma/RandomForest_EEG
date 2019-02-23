@@ -58,9 +58,6 @@
 ```python
 import mne
 # the erp and eeg data preprocessing is run within python, package mne
-# see the acutal codes in 
-# /eeg_pre_processing/eeg_pre_processing.py
-# /eeg_pre_processing/erp_pre_processing.py
 ```
 
 1. Pre-processing
