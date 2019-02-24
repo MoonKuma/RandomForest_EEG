@@ -54,11 +54,11 @@
 
   - Overall high prediction accuracy
 
-    ![](D:\Data\PythonProjects\RandomForest_EEG\reference\img\paper_result1.png)
+    ![image](https://github.com/MoonKuma/RandomForest_EEG/blob/master/reference/img/paper_result1.png)
 
   - 59 of 316 features are important (as rule of thumbs) for predicting(Yet there is no cutting points)
 
-    ![](D:\Data\PythonProjects\RandomForest_EEG\reference\img\paper_result2.png)
+    ![image](https://github.com/MoonKuma/RandomForest_EEG/blob/master/reference/img/paper_result2.png)
 
 - On using model in testing gender difference
 
