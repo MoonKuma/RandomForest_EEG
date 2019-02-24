@@ -10,7 +10,7 @@ import pandas as pd
 from eeg_pre_processing.pre_processing import pre_processing
 from eeg_pre_processing.extract_time_window import get_time_window_data
 from utils.data_merge import data_merge
-from eeg_random_forest.models_to_test import test_regression_model
+from eeg_random_forest.models_to_test import test_regression_model,test_classification_model
 # file location
 raw_data_path = 'data_sample/eeg_raw_data/EEG_Original'
 result_path_erp = 'data_sample/formal_data/sub_evoked_data/'
@@ -97,19 +97,52 @@ def test_regression_models():
         elif name.startswith('eeg'):
             eeg_col.append(name)
 
-    reg_sample_dict = dict()
-    reg_sample_dict['01'] = {'x_columns': behavior_col, 'y_column': target_col}
-    reg_sample_dict['02'] = {'x_columns': peak_col, 'y_column': target_col}
-    reg_sample_dict['03'] = {'x_columns': erp_col, 'y_column': target_col}
-    reg_sample_dict['04'] = {'x_columns': eeg_col, 'y_column': target_col}
-    reg_sample_dict['05'] = {'x_columns': behavior_col + peak_col, 'y_column': target_col}
-    reg_sample_dict['06'] = {'x_columns': behavior_col + peak_col + erp_col, 'y_column': target_col}
-    reg_sample_dict['07'] = {'x_columns': behavior_col + peak_col + eeg_col, 'y_column': target_col}
-    reg_sample_dict['08'] = {'x_columns': behavior_col + peak_col + eeg_col + erp_col, 'y_column': target_col}
+    sample_dict = dict()
+    sample_dict['01'] = {'x_columns': behavior_col, 'y_column': target_col}
+    sample_dict['02'] = {'x_columns': peak_col, 'y_column': target_col}
+    sample_dict['03'] = {'x_columns': erp_col, 'y_column': target_col}
+    sample_dict['04'] = {'x_columns': eeg_col, 'y_column': target_col}
+    sample_dict['05'] = {'x_columns': behavior_col + peak_col, 'y_column': target_col}
+    sample_dict['06'] = {'x_columns': behavior_col + peak_col + erp_col, 'y_column': target_col}
+    sample_dict['07'] = {'x_columns': behavior_col + peak_col + eeg_col, 'y_column': target_col}
+    sample_dict['08'] = {'x_columns': behavior_col + peak_col + eeg_col + erp_col, 'y_column': target_col}
 
-    test_regression_model(full_data=full_data, sample_dict=reg_sample_dict, save_path=model_result_path+'reg_',test_times=10)
+    test_regression_model(full_data=full_data, sample_dict=sample_dict, save_path=model_result_path+'reg_',test_times=10)
+
+# testing classification models
+def test_classification_models():
+    full_data = pd.read_csv(merge_data_name, delimiter=',', header=0, index_col=0)
+    columns = full_data.columns.values
+    behavior_col = ['Atsum', 'Age', 'AVGcor', 'AVGrt']
+    target_col = ['Gender']
+    eeg_col = list()
+    erp_col = list()
+    peak_col = list()
+    for i in range(0, columns.shape[0]):
+        name = columns[i]
+        if name.startswith('erp_peak'):
+            peak_col.append(name)
+        elif name.startswith('erp'):
+            erp_col.append(name)
+        elif name.startswith('eeg'):
+            eeg_col.append(name)
+
+    sample_dict = dict()
+    sample_dict['01'] = {'x_columns': behavior_col, 'y_column': target_col}
+    sample_dict['02'] = {'x_columns': peak_col, 'y_column': target_col}
+    sample_dict['03'] = {'x_columns': erp_col, 'y_column': target_col}
+    sample_dict['04'] = {'x_columns': eeg_col, 'y_column': target_col}
+    sample_dict['05'] = {'x_columns': behavior_col + peak_col, 'y_column': target_col}
+    sample_dict['06'] = {'x_columns': behavior_col + peak_col + erp_col, 'y_column': target_col}
+    sample_dict['07'] = {'x_columns': behavior_col + peak_col + eeg_col, 'y_column': target_col}
+    sample_dict['08'] = {'x_columns': behavior_col + peak_col + eeg_col + erp_col, 'y_column': target_col}
+
+    test_classification_model(full_data=full_data, sample_dict=sample_dict, save_path=model_result_path + 'clf_',
+                          test_times=10)
+    pass
 
 # subjects_pre_processing()
 # time_window_selection()
 # merge_data()
-test_regression_models()
+# test_regression_models()
+test_classification_models()
