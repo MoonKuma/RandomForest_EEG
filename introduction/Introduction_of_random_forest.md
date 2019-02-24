@@ -20,7 +20,7 @@
 
 
 
-   ![](D:\Data\PythonProjects\RandomForest_EEG\reference\img\cart_tree_titanic_survivors.png)
+   ![image](https://github.com/MoonKuma/RandomForest_EEG/blob/master/reference/img/cart_tree_titanic_survivors.png)
 
    - Using a tree like model to makes  decisions and predict their possible consequences. 
    - Traditional decision tree learn the importance(structure) and the cutting point. 
@@ -56,7 +56,7 @@ clf = RandomForestClassifier(n_estimators=’warn’, criterion=’gini’, max_
 
    Related scripts : test_random_forest/ClassifierComparison.py
 
-   ![](D:\Data\PythonProjects\RandomForest_EEG\reference\img\scanning_hyperparameters.png)
+   ![image](https://github.com/MoonKuma/RandomForest_EEG/blob/master/reference/img/scanning_hyperparameters.png)
 
    - Thanks to the bagging and random techniques, the model won't suffer from overfitting.
    - Which means that one can basically build a forest as complicated as he wants
@@ -74,7 +74,7 @@ clf = RandomForestClassifier(n_estimators=’warn’, criterion=’gini’, max_
 
 ### Comparison with other models on same task
 
-![](D:\Data\PythonProjects\RandomForest_EEG\reference\img\model_compare.jpg)
+![image](https://github.com/MoonKuma/RandomForest_EEG/blob/master/reference/img/model_compare.jpg)
 
 - See how Random Forest make more not that decisive classification compared to decision tree and hence saved if from overfitting (in example 3) without sacrifice very much bias ( example 1)
 - Also both of them are not as good at non-linear classification as those kernel method like SVM   
